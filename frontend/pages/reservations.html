@@ -1,0 +1,49 @@
+<div>
+  <section class="section reservations-section">
+    <div class="section-overlay">
+      <h1>Reservations</h1>
+      <p>Book your table easily online.</p>
+
+      <form class="reservation-form mt-4">
+        <div class="mb-3">
+          <label for="name" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="name" placeholder="John Doe" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email Address</label>
+          <input type="email" class="form-control" id="email" placeholder="example@email.com" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" id="phone" placeholder="+387 62 123 456" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="date" class="form-label">Date</label>
+          <input type="date" class="form-control" id="date" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="time" class="form-label">Time</label>
+          <input type="time" class="form-control" id="time" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="guests" class="form-label">Number of Guests</label>
+          <select id="guests" class="form-select" required>
+            <option value="">Select...</option>
+            <option>1 person</option>
+            <option>2 persons</option>
+            <option>3 persons</option>
+            <option>4 persons</option>
+            <option>5+ persons</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-reserve mt-3">Reserve Now</button>
+      </form>
+    </div>
+  </section>
+</div>
