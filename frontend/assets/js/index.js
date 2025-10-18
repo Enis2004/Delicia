@@ -6,43 +6,43 @@ app.run();
 
 app.route({
     view: "page1",
-    onReady: function() { nav("pg1"); }
+    onReady: function() {  }
 });
 
 
 app.route({
     view: "page2",
-    onReady: function() { nav("pg2"); }
+    onReady: function() {  }
 });
 
 
 app.route({
     view: "page3",
-    onReady: function() { nav("pg3"); }
+    onReady: function() {  }
 });
 
 
 app.route({
     view: "page4",
-    onReady: function() { nav("pg4"); }
+    onReady: function() {  }
 });
 
 
 app.route({
     view: "page5",
-    onReady: function() { nav("pg5"); }
+    onReady: function() {  }
 });
 
 
 app.route({
     view: "page6",
-    onReady: function() { nav("pg6"); }
+    onReady: function() {  }
 });
 
 
 app.route({
     view: "page7",
-    onReady: function() { nav("pg7"); }
+    onReady: function() {  }
 });
 
 app.route({
