@@ -1,0 +1,32 @@
+<?php
+
+class BaseService {
+    protected $dao;
+
+    public function __construct($entity_dao) {
+        $this->dao = $entity_dao;
+    }
+
+    public function get_all() {
+        return $this->dao->getAll();
+    }
+
+    public function get_by_id($id) {
+        return $this->dao->getById($id);
+    }
+
+    public function add($entity) {
+        return $this->dao->add($entity);
+    }
+
+    public function update($entity, $id, $id_column = "id") {
+        return $this->dao->update($entity, $id);
+    }
+
+    public function delete($id) {
+        return $this->dao->delete($id);
+    }
+}
+
+?>
+
