@@ -8,22 +8,53 @@ require __DIR__ . '/rest/services/CategoryService.php';
 require __DIR__ . '/rest/services/MenuItemService.php';
 require __DIR__ . '/rest/services/ReservationService.php';
 require __DIR__ . '/rest/services/UserService.php';
+require __DIR__ . '/rest/services/AuthService.php';
+require __DIR__ . '/middleware/AuthMiddleware.php';
+require __DIR__ . '/data/roles.php';
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
 
 Flight::register('contactService', 'ContactService');
 Flight::register('categoryService', 'CategoryService');
 Flight::register('menuItemService', 'MenuItemService');
 Flight::register('reservationService', 'ReservationService');
 Flight::register('userService', 'UserService');
+Flight::register('auth_service', "AuthService");
+Flight::register('auth_middleware', "AuthMiddleware");
+
+Flight::before('start', function() {
+   if(
+       strpos(Flight::request()->url, '/auth/login') === 0 ||
+       strpos(Flight::request()->url, '/auth/register') === 0
+   ) {
+       return TRUE;
+   } else {
+        try {
+            $token = Flight::request()->getHeader("Authentication");
+            if(!$token) {
+                $token = Flight::request()->getHeader("Authorization");
+            }
+            if(Flight::auth_middleware()->verifyToken($token))
+                return TRUE;
+        } catch (\Exception $e) {
+            Flight::halt(401, $e->getMessage());
+        }
+    }
+});
+
 
 require_once __DIR__ . '/rest/routes/ContactRoutes.php';
 require_once __DIR__ . '/rest/routes/CategoryRoutes.php';
 require_once __DIR__ . '/rest/routes/MenuItemRoutes.php';
 require_once __DIR__ . '/rest/routes/ReservationRoutes.php';
 require_once __DIR__ . '/rest/routes/UserRoutes.php';
+require_once __DIR__ . '/rest/routes/AuthRoutes.php';
 
 Flight::start();
 

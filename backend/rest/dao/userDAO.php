@@ -26,20 +26,14 @@ class UserDao extends BaseDao {
             [ 'q' => $like ]
         );
     }
-
-    public function authenticate($email, $password) {
-        $user = $this->getByEmail($email);
-        if (!$user) { return null; }
-        if (password_verify($password, $user['password'])) {
-            return $user;
-        }
-        return null;
-    }
-
     public function changePassword($user_id, $new_password_plain) {
         $hash = password_hash($new_password_plain, PASSWORD_DEFAULT);
         $this->update([ 'password' => $hash ], $user_id);
         return true;
+    }
+
+    public function insertUser($data) {
+        return $this->add($data);
     }
 }
 ?>

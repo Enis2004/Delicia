@@ -1,10 +1,12 @@
 <?php
 
+
 /**
  * @OA\Get(
  *     path="/reservations",
  *     summary="Get all reservations",
  *     tags={"Reservations"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Response(
  *         response=200,
  *         description="Successful operation"
@@ -16,6 +18,7 @@
  * )
  */
 Flight::route('GET /reservations', function(){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::reservationService()->get_all());
 });
 
@@ -24,6 +27,7 @@ Flight::route('GET /reservations', function(){
  *     path="/reservations/{id}",
  *     summary="Get reservation by ID",
  *     tags={"Reservations"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -41,6 +45,7 @@ Flight::route('GET /reservations', function(){
  * )
  */
 Flight::route('GET /reservations/@id', function($id){
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::reservationService()->get_by_id($id));
 });
 
@@ -49,6 +54,7 @@ Flight::route('GET /reservations/@id', function($id){
  *     path="/reservations",
  *     summary="Create a new reservation",
  *     tags={"Reservations"},
+ *     security={{"ApiKey": {}}},
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
@@ -70,6 +76,7 @@ Flight::route('GET /reservations/@id', function($id){
  * )
  */
 Flight::route('POST /reservations', function(){
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::reservationService()->createReservation($data));
 });
@@ -79,6 +86,7 @@ Flight::route('POST /reservations', function(){
  *     path="/reservations/{id}",
  *     summary="Update reservation by ID",
  *     tags={"Reservations"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -105,6 +113,7 @@ Flight::route('POST /reservations', function(){
  * )
  */
 Flight::route('PUT /reservations/@id', function($id){
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::reservationService()->updateReservation($data, $id));
 });
@@ -114,6 +123,7 @@ Flight::route('PUT /reservations/@id', function($id){
  *     path="/reservations/{id}",
  *     summary="Delete reservation by ID",
  *     tags={"Reservations"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -131,6 +141,7 @@ Flight::route('PUT /reservations/@id', function($id){
  * )
  */
 Flight::route('DELETE /reservations/@id', function($id){
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::reservationService()->delete($id));
 });
 
@@ -139,6 +150,7 @@ Flight::route('DELETE /reservations/@id', function($id){
  *     path="/reservations/user/{user_id}",
  *     summary="Get reservations by user ID",
  *     tags={"Reservations"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="user_id",
  *         in="path",
@@ -156,6 +168,7 @@ Flight::route('DELETE /reservations/@id', function($id){
  * )
  */
 Flight::route('GET /reservations/user/@user_id', function($user_id){
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::reservationService()->getByUserId($user_id));
 });
 
@@ -164,6 +177,7 @@ Flight::route('GET /reservations/user/@user_id', function($user_id){
  *     path="/reservations/date-range",
  *     summary="Get reservations by date range",
  *     tags={"Reservations"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="start",
  *         in="query",
@@ -185,6 +199,7 @@ Flight::route('GET /reservations/user/@user_id', function($user_id){
  * )
  */
 Flight::route('GET /reservations/date-range', function(){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     $start_date = Flight::request()->query['start'] ?? null;
     $end_date = Flight::request()->query['end'] ?? null;
     Flight::json(Flight::reservationService()->getByDateRange($start_date, $end_date));
@@ -195,6 +210,7 @@ Flight::route('GET /reservations/date-range', function(){
  *     path="/reservations/available",
  *     summary="Check if reservation slot is available",
  *     tags={"Reservations"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="date",
  *         in="query",
@@ -216,6 +232,7 @@ Flight::route('GET /reservations/date-range', function(){
  * )
  */
 Flight::route('GET /reservations/available', function(){
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $date = Flight::request()->query['date'] ?? null;
     $time = Flight::request()->query['time'] ?? null;
     Flight::json(Flight::reservationService()->isSlotAvailable($date, $time));
@@ -226,6 +243,7 @@ Flight::route('GET /reservations/available', function(){
  *     path="/reservations/{id}/cancel",
  *     summary="Cancel reservation by ID",
  *     tags={"Reservations"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -243,6 +261,7 @@ Flight::route('GET /reservations/available', function(){
  * )
  */
 Flight::route('DELETE /reservations/@id/cancel', function($id){
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::reservationService()->cancel($id));
 });
 
@@ -251,6 +270,7 @@ Flight::route('DELETE /reservations/@id/cancel', function($id){
  *     path="/reservations/day/{date}",
  *     summary="Get reservations for a specific day with users",
  *     tags={"Reservations"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="date",
  *         in="path",
@@ -268,6 +288,7 @@ Flight::route('DELETE /reservations/@id/cancel', function($id){
  * )
  */
 Flight::route('GET /reservations/day/@date', function($date){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::reservationService()->listForDayWithUsers($date));
 });
 

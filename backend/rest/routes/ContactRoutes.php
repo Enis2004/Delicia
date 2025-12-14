@@ -5,6 +5,7 @@
  *     path="/contacts",
  *     summary="Get all contacts",
  *     tags={"Contacts"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Response(
  *         response=200,
  *         description="Successful operation"
@@ -16,6 +17,7 @@
  * )
  */
 Flight::route('GET /contacts', function(){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::contactService()->get_all());
 });
 
@@ -24,6 +26,7 @@ Flight::route('GET /contacts', function(){
  *     path="/contacts/{id}",
  *     summary="Get contact by ID",
  *     tags={"Contacts"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -41,6 +44,7 @@ Flight::route('GET /contacts', function(){
  * )
  */
 Flight::route('GET /contacts/@id', function($id){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::contactService()->get_by_id($id));
 });
 
@@ -49,6 +53,7 @@ Flight::route('GET /contacts/@id', function($id){
  *     path="/contacts",
  *     summary="Create a new contact",
  *     tags={"Contacts"},
+ *     security={{"ApiKey": {}}},
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
@@ -80,6 +85,7 @@ Flight::route('POST /contacts', function(){
  *     path="/contacts/{id}",
  *     summary="Update contact by ID",
  *     tags={"Contacts"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -107,6 +113,7 @@ Flight::route('POST /contacts', function(){
  * )
  */
 Flight::route('PUT /contacts/@id', function($id){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::contactService()->update($data, $id));
 });
@@ -116,6 +123,7 @@ Flight::route('PUT /contacts/@id', function($id){
  *     path="/contacts/{id}",
  *     summary="Delete contact by ID",
  *     tags={"Contacts"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -133,6 +141,7 @@ Flight::route('PUT /contacts/@id', function($id){
  * )
  */
 Flight::route('DELETE /contacts/@id', function($id){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::contactService()->delete($id));
 });
 
@@ -141,6 +150,7 @@ Flight::route('DELETE /contacts/@id', function($id){
  *     path="/contacts/email/{email}",
  *     summary="Get contact by email",
  *     tags={"Contacts"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="email",
  *         in="path",
@@ -158,6 +168,7 @@ Flight::route('DELETE /contacts/@id', function($id){
  * )
  */
 Flight::route('GET /contacts/email/@email', function($email){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::contactService()->getByEmail($email));
 });
 
@@ -166,6 +177,7 @@ Flight::route('GET /contacts/email/@email', function($email){
  *     path="/contacts/search/subject/{term}",
  *     summary="Search contacts by subject",
  *     tags={"Contacts"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="term",
  *         in="path",
@@ -183,6 +195,7 @@ Flight::route('GET /contacts/email/@email', function($email){
  * )
  */
 Flight::route('GET /contacts/search/subject/@term', function($term){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::contactService()->searchBySubject($term));
 });
 
@@ -191,6 +204,7 @@ Flight::route('GET /contacts/search/subject/@term', function($term){
  *     path="/contacts/recent",
  *     summary="Get recent contacts",
  *     tags={"Contacts"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="limit",
  *         in="query",
@@ -212,6 +226,7 @@ Flight::route('GET /contacts/search/subject/@term', function($term){
  * )
  */
 Flight::route('GET /contacts/recent', function(){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     $limit = Flight::request()->query['limit'] ?? 10;
     $offset = Flight::request()->query['offset'] ?? 0;
     Flight::json(Flight::contactService()->getRecent($limit, $offset));

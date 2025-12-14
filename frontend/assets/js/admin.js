@@ -1,11 +1,46 @@
-
 function admin(){
-console.log("Admin function called");
-const reservationCount = "42";
-const visitCount = "1287";
-const onlineUsers = Math.floor(Math.random() * 10) + 1;
-
-document.getElementById("reservationCount").textContent = reservationCount;
-document.getElementById("visitCount").textContent = visitCount;
-document.getElementById("onlineUsers").textContent = onlineUsers;
+    if (!AuthService.requireAdmin()) {
+        return;
+    }
+    
+    console.log("Admin function called");
+    
+    
+    RestClient.get("reservations",
+        function(reservations) {
+            if (Array.isArray(reservations)) {
+                document.getElementById("reservationCount").textContent = reservations.length;
+            }
+        },
+        function(error) {
+            console.error("Error loading reservations:", error);
+            document.getElementById("reservationCount").textContent = "0";
+        }
+    );
+    
+    
+    RestClient.get("contacts",
+        function(contacts) {
+            if (Array.isArray(contacts)) {
+                document.getElementById("visitCount").textContent = contacts.length;
+            }
+        },
+        function(error) {
+            console.error("Error loading contacts:", error);
+            document.getElementById("visitCount").textContent = "0";
+        }
+    );
+    
+    
+    RestClient.get("users",
+        function(users) {
+            if (Array.isArray(users)) {
+                document.getElementById("onlineUsers").textContent = users.length;
+            }
+        },
+        function(error) {
+            console.error("Error loading users:", error);
+            document.getElementById("onlineUsers").textContent = "0";
+        }
+    );
 }

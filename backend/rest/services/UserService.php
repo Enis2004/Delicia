@@ -22,6 +22,26 @@ class UserService extends BaseService {
     public function changePassword($user_id, $new_password_plain) {
         return $this->dao->changePassword($user_id, $new_password_plain);
     }
+    public function insertUser($user) {
+        if (isset($user['email'])) {
+            $existingUser = $this->dao->getByEmail($user['email']);
+            if ($existingUser) {
+                throw new Exception("User with this email already exists.");
+            }
+        }
+        if (isset($user['email']) && !filter_var($user['email'], FILTER_VALIDATE_EMAIL)) {
+            throw new Exception("Invalid email format.");
+        }
+        if (!isset($user['role']) || empty($user['role'])) {
+            throw new Exception("Role is required and must be 'admin' or 'user'.");
+        }
+        $user['role'] = strtolower(trim($user['role']));
+        if (!in_array($user['role'], ['admin', 'user'])) {
+            throw new Exception("Role must be 'admin' or 'user'.");
+        }
+        
+        return $this->dao->insertUser($user);
+    }
 }
 
 ?>

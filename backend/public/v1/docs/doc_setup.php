@@ -14,7 +14,7 @@
 
 /**
  * @OA\Server(
- *      url="http://localhost/Delicia/Delicia/backend/",
+ *      url="http://localhost/Delicia/backend/",
  *      description="API server"
  * )
 */

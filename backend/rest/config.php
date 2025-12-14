@@ -26,9 +26,9 @@ class Config
     {
         return 'localhost';
     }
-
     public static function JWT_SECRET() {
-        return '';
+       return 'enis';
     }
+
 }
 

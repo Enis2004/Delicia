@@ -1,0 +1,46 @@
+<div>
+  <section class="section user-dashboard-section">
+    <div class="section-overlay">
+      <h1>My Dashboard</h1>
+      <p>Welcome, <span id="dashboard-user-name" style="color:#bfa46f;"></span>!</p>
+      
+      <div class="container mt-4">
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <div class="card" style="background: rgba(255,255,255,0.1); border-radius: 10px; padding: 20px;">
+              <h3>My Reservations</h3>
+              <p id="dashboard-reservations-count" style="font-size: 2.5em; margin: 10px 0;">0</p>
+            </div>
+          </div>
+          
+          <div class="col-md-4 mb-3">
+            <div class="card" style="background: rgba(255,255,255,0.1); border-radius: 10px; padding: 20px;">
+              <h3>Quick Actions</h3>
+              <button class="btn btn-light btn-sm mb-2" onclick="window.location.href='#page3'" style="width: 100%;">New Reservation</button>
+              <button class="btn btn-light btn-sm" onclick="window.location.href='#page2'" style="width: 100%;">View Menu</button>
+            </div>
+          </div>
+          
+          <div class="col-md-4 mb-3">
+            <div class="card" style="background: rgba(255,255,255,0.1); border-radius: 10px; padding: 20px;">
+              <h3>My Profile</h3>
+              <p id="dashboard-user-email" style="margin: 5px 0;"></p>
+              <button class="btn btn-light btn-sm" onclick="editProfile()" style="width: 100%;">Edit Profile</button>
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="row mt-4">
+          <div class="col-12">
+            <h2>My Reservations</h2>
+            <div id="reservations-list" class="mt-3">
+              <p>Loading reservations...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
