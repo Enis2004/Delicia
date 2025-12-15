@@ -1,0 +1,28 @@
+<div>
+    <section class='section admin-section'>
+        <div class='section-overlay'>
+            <h1>Admin Dashboard - Get All</h1>
+            <a href="#page8" class="btn btn-back">← Back to Admin</a>
+            
+            <div class="admin-controls">
+                <div class="form-group">
+                    <label for="entity-select-getall">Select Entity:</label>
+                    <select id="entity-select-getall" class="form-control">
+                        <option value="">-- Select Entity --</option>
+                        <option value="categories">Categories</option>
+                        <option value="menu-items">Menu Items</option>
+                        <option value="contacts">Contacts</option>
+                        <option value="reservations">Reservations</option>
+                        <option value="users">Users</option>
+                    </select>
+                </div>
+                <button id="btn-getall-execute" class="btn btn-primary">Get All</button>
+            </div>
+
+            <div id="admin-response-box" class="admin-response-box"></div>
+            
+            <div id="admin-table-container" class="admin-table-container"></div>
+        </div>
+    </section>
+</div>
+

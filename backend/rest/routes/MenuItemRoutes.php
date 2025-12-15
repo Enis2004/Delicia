@@ -1,10 +1,12 @@
 <?php
 
+
 /**
  * @OA\Get(
  *     path="/menu-items",
  *     summary="Get all menu items",
  *     tags={"Menu Items"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Response(
  *         response=200,
  *         description="Successful operation"
@@ -16,6 +18,7 @@
  * )
  */
 Flight::route('GET /menu-items', function(){
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::menuItemService()->get_all());
 });
 
@@ -24,6 +27,7 @@ Flight::route('GET /menu-items', function(){
  *     path="/menu-items/{id}",
  *     summary="Get menu item by ID",
  *     tags={"Menu Items"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -41,6 +45,7 @@ Flight::route('GET /menu-items', function(){
  * )
  */
 Flight::route('GET /menu-items/@id', function($id){
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::menuItemService()->get_by_id($id));
 });
 
@@ -49,6 +54,7 @@ Flight::route('GET /menu-items/@id', function($id){
  *     path="/menu-items",
  *     summary="Create a new menu item",
  *     tags={"Menu Items"},
+ *     security={{"ApiKey": {}}},
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
@@ -71,6 +77,7 @@ Flight::route('GET /menu-items/@id', function($id){
  * )
  */
 Flight::route('POST /menu-items', function(){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::menuItemService()->createMenuItem($data));
 });
@@ -80,6 +87,7 @@ Flight::route('POST /menu-items', function(){
  *     path="/menu-items/{id}",
  *     summary="Update menu item by ID",
  *     tags={"Menu Items"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -107,6 +115,7 @@ Flight::route('POST /menu-items', function(){
  * )
  */
 Flight::route('PUT /menu-items/@id', function($id){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::menuItemService()->updateMenuItem($data, $id));
 });
@@ -116,6 +125,7 @@ Flight::route('PUT /menu-items/@id', function($id){
  *     path="/menu-items/{id}",
  *     summary="Delete menu item by ID",
  *     tags={"Menu Items"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -133,6 +143,7 @@ Flight::route('PUT /menu-items/@id', function($id){
  * )
  */
 Flight::route('DELETE /menu-items/@id', function($id){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::menuItemService()->delete($id));
 });
 
@@ -141,6 +152,7 @@ Flight::route('DELETE /menu-items/@id', function($id){
  *     path="/menu-items/category/{category_id}",
  *     summary="Get menu items by category ID",
  *     tags={"Menu Items"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="category_id",
  *         in="path",
@@ -158,6 +170,7 @@ Flight::route('DELETE /menu-items/@id', function($id){
  * )
  */
 Flight::route('GET /menu-items/category/@category_id', function($category_id){
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::menuItemService()->getByCategoryId($category_id));
 });
 
@@ -166,6 +179,7 @@ Flight::route('GET /menu-items/category/@category_id', function($category_id){
  *     path="/menu-items/search/{term}",
  *     summary="Search menu items by name",
  *     tags={"Menu Items"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="term",
  *         in="path",
@@ -183,6 +197,7 @@ Flight::route('GET /menu-items/category/@category_id', function($category_id){
  * )
  */
 Flight::route('GET /menu-items/search/@term', function($term){
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::menuItemService()->searchByName($term));
 });
 
@@ -191,6 +206,7 @@ Flight::route('GET /menu-items/search/@term', function($term){
  *     path="/menu-items/price-range",
  *     summary="Filter menu items by price range",
  *     tags={"Menu Items"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="min",
  *         in="query",
@@ -212,6 +228,7 @@ Flight::route('GET /menu-items/search/@term', function($term){
  * )
  */
 Flight::route('GET /menu-items/price-range', function(){
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $min_price = Flight::request()->query['min'] ?? 0;
     $max_price = Flight::request()->query['max'] ?? 999999;
     Flight::json(Flight::menuItemService()->filterByPriceRange($min_price, $max_price));
@@ -222,6 +239,7 @@ Flight::route('GET /menu-items/price-range', function(){
  *     path="/menu-items/{id}/with-category",
  *     summary="Get menu item with category by ID",
  *     tags={"Menu Items"},
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -239,6 +257,7 @@ Flight::route('GET /menu-items/price-range', function(){
  * )
  */
 Flight::route('GET /menu-items/@id/with-category', function($id){
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::menuItemService()->getWithCategory($id));
 });
 
@@ -247,6 +266,7 @@ Flight::route('GET /menu-items/@id/with-category', function($id){
  *     path="/menu-items/many",
  *     summary="Get multiple menu items by IDs",
  *     tags={"Menu Items"},
+ *     security={{"ApiKey": {}}},
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
@@ -266,6 +286,7 @@ Flight::route('GET /menu-items/@id/with-category', function($id){
  * )
  */
 Flight::route('POST /menu-items/many', function(){
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     $ids = $data['ids'] ?? [];
     Flight::json(Flight::menuItemService()->getManyByIds($ids));

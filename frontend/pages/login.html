@@ -4,13 +4,14 @@
       <h1>Login</h1>
       <p>Access your account to manage reservations or view your profile.</p>
 
-      <form class="login-form">
+      <form class="login-form" id="login-form">
         <div class="mb-3">
           <label for="email" class="form-label">Email address</label>
           <input
             type="email"
             class="form-control"
             id="email"
+            name="email"
             placeholder="Enter your email"
             required
           >
@@ -22,6 +23,7 @@
             type="password"
             class="form-control"
             id="password"
+            name="password"
             placeholder="Enter your password"
             required
           >

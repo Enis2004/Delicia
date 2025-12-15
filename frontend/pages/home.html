@@ -1,10 +1,51 @@
 <div>
   <section class='section home-section'>
       <div class='section-overlay'>
-        <h1>Welcome to <span style="color:#bfa46f;">Delicia</span></h1>
-        <p>Experience fine dining with elegance and taste.</p>
-        <!--<button class='btn btn-light' onclick="loadView('reservations')">Reserve a Table</button>-->
-        <button class='btn btn-light' ><a id="homereservebtn"href="#page3">Reserve a Table</a></button>
+        <div id="guest-welcome" style="display: none;">
+          <h1>Welcome to <span style="color:#bfa46f;">Delicia</span></h1>
+          <p>Experience fine dining with elegance and taste.</p>
+          <button class='btn btn-light'><a id="homereservebtn" href="#page3">Reserve a Table</a></button>
+        </div>
+        
+        <div id="user-dashboard" style="display: none;">
+          <h1>Welcome back, <span id="user-name" style="color:#bfa46f;"></span>!</h1>
+          <p>Manage your reservations and explore our menu.</p>
+          <div class="dashboard-cards mt-4" style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            <div class="card" style="min-width: 200px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+              <h3>My Reservations</h3>
+              <p id="user-reservations-count" style="font-size: 2em; margin: 10px 0;">0</p>
+              <button class="btn btn-light btn-sm" onclick="window.location.href='#page9'">View Dashboard</button>
+            </div>
+            <div class="card" style="min-width: 200px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+              <h3>Quick Actions</h3>
+              <button class="btn btn-light btn-sm mb-2" onclick="window.location.href='#page3'" style="width: 100%;">New Reservation</button>
+              <button class="btn btn-light btn-sm" onclick="window.location.href='#page2'" style="width: 100%;">View Menu</button>
+            </div>
+          </div>
+        </div>
+        
+        <div id="admin-dashboard" style="display: none;">
+          <h1>Admin Dashboard</h1>
+          <p>Manage restaurant operations and view statistics.</p>
+          <div class="dashboard-cards mt-4" style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            <div class="card" style="min-width: 200px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+              <h3>Total Reservations</h3>
+              <p id="admin-reservations-count" style="font-size: 2em; margin: 10px 0;">0</p>
+            </div>
+            <div class="card" style="min-width: 200px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+              <h3>Contacts</h3>
+              <p id="admin-contacts-count" style="font-size: 2em; margin: 10px 0;">0</p>
+            </div>
+            <div class="card" style="min-width: 200px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+              <h3>Menu Items</h3>
+              <p id="admin-menu-count" style="font-size: 2em; margin: 10px 0;">0</p>
+            </div>
+          </div>
+          <div class="mt-4">
+            <button class="btn btn-light me-2" onclick="window.location.href='#page8'">Full Admin Panel</button>
+            <button class="btn btn-light" onclick="window.location.href='#page2'">Manage Menu</button>
+          </div>
+        </div>
       </div>
     </section>
 </div>
