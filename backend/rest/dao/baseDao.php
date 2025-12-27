@@ -7,11 +7,11 @@ class BaseDao
     private $table_name;
     private $id_column;
 
-    public function construct($table_name)
+    public function __construct($table_name)
     {
     $this->table_name = $table_name;
     try {
-        $ca_cert_path = DIR__ . '/../../ca-certificate.crt';
+        $ca_cert_path = __DIR__ . '/../../ca-certificate.crt';
 
         $this->connection = new PDO(
             "mysql:host=" . Config::DB_HOST() . ";dbname=" . Config::DB_NAME() . ";port=" . Config::DB_PORT(),
